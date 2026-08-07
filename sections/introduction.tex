@@ -1,73 +1,81 @@
-\section{Initial Situation}
+\section{Ausgangssituation}
 
-Employees at Primetals Technologies Austria GmbH currently have to access multiple
-systems in order to obtain information about the company's IT infrastructure and
-identify potential issues. According to employees, relevant information is
-distributed across various sources, primarily \gls{mssql} databases and web interfaces,
-making infrastructure monitoring time-consuming and inefficient. Employees who
-have worked with these systems also reported that important information can
-easily be overlooked due to the lack of a centralized overview.
+Mitarbeitende der Primetals Technologies Austria GmbH müssen derzeit mehrere
+Systeme verwenden, um Informationen über die IT-Infrastruktur des Unternehmens
+zu erhalten und potenzielle Probleme zu identifizieren. Nach Angaben der
+Mitarbeitenden sind relevante Informationen auf verschiedene Quellen verteilt,
+vor allem auf \gls{mssql}-Datenbanken und Weboberflächen, wodurch das Monitoring
+der Infrastruktur zeitaufwendig und ineffizient wird. Mitarbeitende, die bereits
+mit diesen Systemen gearbeitet haben, berichteten außerdem, dass wichtige
+Informationen aufgrund des fehlenden zentralen Überblicks leicht übersehen werden
+können.
 
-\subsection{Company}
+\subsection{Unternehmen}
 
-Primetals Technologies Austria GmbH is an international engineering company
-specializing in technologies, equipment, and automated solutions for the
-metals industry. The company develops solutions for steel production with a
-focus on improving productivity, sustainability, and digitalization
-~\cite{primetals2026}.
+Die Primetals Technologies Austria GmbH ist ein internationales
+Ingenieurunternehmen, das sich auf Technologien, Anlagen und automatisierte
+Lösungen für die Metallindustrie spezialisiert hat. Das Unternehmen entwickelt
+Lösungen für die Stahlproduktion mit Fokus auf Produktivitätssteigerung,
+Nachhaltigkeit und Digitalisierung~\cite{primetals2026}.
 
-\subsection{Infrastructure landscape}
+\subsection{Infrastrukturlandschaft}
 
-The infrastructure of Primetals Technologies Austria GmbH consists of multiple
-sources that contain information about different company resources. The primary
-\gls{mssql} databases store structured information about devices, locations, and
-networks through tables and views. Additionally, web applications provide
-information about devices, Azure services, and the connection status of different
-networks.
+Die Infrastruktur der Primetals Technologies Austria GmbH besteht aus mehreren
+Quellen, die Informationen über unterschiedliche Unternehmensressourcen
+enthalten. Die zentralen \gls{mssql}-Datenbanken speichern strukturierte
+Informationen über Geräte, Standorte und Netzwerke in Form von Tabellen und
+Views. Darüber hinaus stellen Webanwendungen Informationen über Geräte,
+Azure-Dienste und den Verbindungsstatus verschiedener Netzwerke bereit.
 
-\section{Problem Statement}
+\section{Problemstellung}
 
-The current infrastructure requires employees to manually collect data from
-independent sources in order to gain a complete understanding of the company's
-infrastructure. The manual process consumes time and increases the risk of 
-errors during the data analysis. As a result, there is no reliable way to
-efficiently monitor the current state of the company's IT infrastructure.
+Die aktuelle Infrastruktur erfordert, dass Mitarbeitende Daten manuell aus
+unabhängigen Quellen zusammenführen, um sich ein vollständiges Bild der
+Unternehmensinfrastruktur zu machen. Dieser manuelle Prozess kostet Zeit und
+erhöht das Risiko von Fehlern bei der Datenanalyse. Dadurch fehlt eine
+zuverlässige Möglichkeit, den aktuellen Zustand der IT-Infrastruktur des
+Unternehmens effizient zu überwachen.
 
-\section{Concept}
+\section{Konzept}
 
-The proposed concept is based on a centralized application that collects and
-aggregates information from existing sources. The collected data is processed
-through a centralized datasource layer, which provides a unified interface for
-accessing infrastructure information. Instead of manually accessing multiple 
-systems, employees are provided with one centralized visualization that supports
-them in identifing issues within the company's technical landscape.
+Das vorgestellte Konzept basiert auf einer zentralen Anwendung, die
+Informationen aus bestehenden Quellen sammelt und aggregiert. Die erfassten
+Daten werden über eine zentrale Datasource-Schicht verarbeitet, die eine
+einheitliche Schnittstelle für den Zugriff auf Infrastrukturdaten bereitstellt.
+Statt mehrere Systeme manuell zu durchsuchen, erhalten Mitarbeitende eine
+zentrale Visualisierung, die sie bei der Identifikation von Problemen in der
+technischen Landschaft des Unternehmens unterstützt.
 
-\section{Proposed Solution}
+\section{Vorgeschlagene Lösung}
 
-The goal is a \gls{grafana} plugin that implements the Global Infrastructure
-Overview (GIO) system. The plugin is divided into multiple layers to separate
-data processing, communication, and visualization.
+Ziel ist ein \gls{grafana}-Plugin, das das Global Infrastructure Overview
+(GIO)-System implementiert. Das Plugin ist in mehrere Schichten unterteilt, um
+Datenverarbeitung, Kommunikation und Visualisierung voneinander zu trennen.
 
-The common layer contains repositories and providers, which process and
-aggregate the collected data before it is accessible through the \gls{grafana}
-Go API interface.
+Die Common-Schicht enthält Repositories und Provider, die die erfassten Daten
+verarbeiten und aggregieren, bevor sie über die \gls{grafana}-Go-API-Schnittstelle
+verfügbar gemacht werden.
 
-The datasource layer can be extended to retrieve data from \gls{mssql} databases and
-APIs. The collected information is transformed into a unified structure and
-forwarded to the visualization layer, which can access the data independently of
-the original data structure.
+Die Datasource-Schicht kann erweitert werden, um Daten aus \gls{mssql}-Datenbanken
+und APIs abzurufen. Die gesammelten Informationen werden in eine einheitliche
+Struktur überführt und an die Visualisierungsschicht weitergeleitet, die auf die
+Daten unabhängig von der ursprünglichen Datenstruktur zugreifen kann.
 
-The visualization layer presents the data of Primetals Technologies Austria GmbH
-on a world map and detail views for closer information. The view changes based on
-zoom and click actions. Additionally, filter and search functions help employees
-to locate a problem and analyze it.
+Die Visualisierungsschicht stellt die Daten der Primetals Technologies Austria
+GmbH auf einer Weltkarte sowie in Detailansichten für weiterführende
+Informationen dar. Die Ansicht verändert sich abhängig von Zoom- und
+Klickaktionen. Zusätzlich helfen Filter- und Suchfunktionen den Mitarbeitenden
+dabei, ein Problem zu lokalisieren und zu analysieren.
 
-Access to \gls{grafana} is secured through the existing authentication and authorization
-mechanisms, ensuring that only authorized users can access the plugin.
+Der Zugriff auf \gls{grafana} ist durch die vorhandenen Authentifizierungs- und
+Autorisierungsmechanismen abgesichert, sodass nur berechtigte Benutzer auf das
+Plugin zugreifen können.
 
-\section{Structure of the thesis}
+\section{Aufbau der Arbeit}
 
-The thesis is divided into several chapters. After the introduction, the technical fundamentals
-of \gls{grafana} and the required technologies are presented. The following chapter describes 
-the architecture and implementation of the developed solution. The thesis concludes with an evaluation
-of the system, discussion of the results and possible future extensions.
+Die Arbeit ist in mehrere Kapitel gegliedert. Nach der Einleitung werden die
+technischen Grundlagen von \gls{grafana} und den erforderlichen Technologien
+vorgestellt. Das folgende Kapitel beschreibt die Architektur und die
+Implementierung der entwickelten Lösung. Abschließend enthält die Arbeit eine
+Evaluierung des Systems, eine Diskussion der Ergebnisse sowie mögliche
+Erweiterungen für die Zukunft.
